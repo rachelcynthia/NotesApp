@@ -1,5 +1,11 @@
 package user;
 
+import exceptions.IllegalNameException;
+
+import javax.naming.InvalidNameException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegisterUser {
 
     private final String name;
@@ -15,6 +21,13 @@ public class RegisterUser {
     }
 
     public User create() {
+        Pattern nameValidation = Pattern.compile("^[A-Za-z][A-Za-z\\s]{2,63}$");
+        Matcher matcher = nameValidation.matcher(name);
+
+        if(!matcher.matches()){
+            throw new IllegalNameException();
+        }
+
         return new User(name, email, password);
     }
 }
