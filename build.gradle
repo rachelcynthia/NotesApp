@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id "org.flywaydb.flyway" version "8.1.0"
 }
 
 group 'org.example'
@@ -12,6 +13,13 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    implementation 'org.postgresql:postgresql:42.2.10'
+}
+
+flyway {
+    url = 'jdbc:postgresql://127.0.0.1:5432/notesapp'
+    user = 'notesapp'
+    password = 'password'
 }
 
 test {
