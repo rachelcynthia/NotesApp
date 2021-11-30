@@ -3,6 +3,7 @@ package user;
 import exceptions.InvalidEmailException;
 import exceptions.InvalidNameException;
 import exceptions.InvalidPasswordException;
+import exceptions.PasswordDoesNotMatchException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -49,5 +50,16 @@ class RegisterUserTest {
         RegisterUser newUser = new RegisterUser(name, email, password, password);
 
         assertThrows(InvalidPasswordException.class, newUser::create);
+    }
+
+    @Test
+    void shouldThrowPasswordDoesNotMatchExceptionWhenPasswordDoesNotMatch() {
+        String name = "User";
+        String email = "user@gmail.com";
+        String password = "Password@123";
+        String confirmPassword = "confirmPassword";
+        RegisterUser newUser = new RegisterUser(name, email, password, confirmPassword);
+
+        assertThrows(PasswordDoesNotMatchException.class, newUser::create);
     }
 }

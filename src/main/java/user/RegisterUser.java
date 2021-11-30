@@ -3,6 +3,7 @@ package user;
 import exceptions.InvalidEmailException;
 import exceptions.InvalidNameException;
 import exceptions.InvalidPasswordException;
+import exceptions.PasswordDoesNotMatchException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,16 +23,20 @@ public class RegisterUser {
     }
 
     public User create() {
-        if(!getNameValidation()){
+        if (!getNameValidation()) {
             throw new InvalidNameException();
         }
 
-        if(!getEmailValidation()){
+        if (!getEmailValidation()) {
             throw new InvalidEmailException();
         }
 
-        if(!getPasswordValidation()){
+        if (!getPasswordValidation()) {
             throw new InvalidPasswordException();
+        }
+
+        if (!password.equals(confirmPassword)) {
+            throw new PasswordDoesNotMatchException();
         }
 
         return new User(name, email, password);
