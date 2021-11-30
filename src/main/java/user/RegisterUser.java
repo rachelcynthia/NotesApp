@@ -2,6 +2,7 @@ package user;
 
 import exceptions.InvalidEmailException;
 import exceptions.InvalidNameException;
+import exceptions.InvalidPasswordException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,6 +30,10 @@ public class RegisterUser {
             throw new InvalidEmailException();
         }
 
+        if(!getPasswordValidation()){
+            throw new InvalidPasswordException();
+        }
+
         return new User(name, email, password);
     }
 
@@ -39,9 +44,15 @@ public class RegisterUser {
     }
 
     private boolean getEmailValidation() {
-        Pattern nameValidation = Pattern.compile("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+        Pattern emailValidation = Pattern.compile("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
-        Matcher matcher = nameValidation.matcher(email);
+        Matcher matcher = emailValidation.matcher(email);
+        return matcher.matches();
+    }
+
+    private boolean getPasswordValidation() {
+        Pattern passwordValidation = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$");
+        Matcher matcher = passwordValidation.matcher(password);
         return matcher.matches();
     }
 }
