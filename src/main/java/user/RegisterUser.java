@@ -1,8 +1,8 @@
 package user;
 
-import exceptions.IllegalNameException;
+import exceptions.InvalidEmailException;
+import exceptions.InvalidNameException;
 
-import javax.naming.InvalidNameException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,13 +21,27 @@ public class RegisterUser {
     }
 
     public User create() {
-        Pattern nameValidation = Pattern.compile("^[A-Za-z][A-Za-z\\s]{2,63}$");
-        Matcher matcher = nameValidation.matcher(name);
+        if(!getNameValidation()){
+            throw new InvalidNameException();
+        }
 
-        if(!matcher.matches()){
-            throw new IllegalNameException();
+        if(!getEmailValidation()){
+            throw new InvalidEmailException();
         }
 
         return new User(name, email, password);
+    }
+
+    private boolean getNameValidation() {
+        Pattern nameValidation = Pattern.compile("^[A-Za-z][A-Za-z\\s]{2,63}$");
+        Matcher matcher = nameValidation.matcher(name);
+        return matcher.matches();
+    }
+
+    private boolean getEmailValidation() {
+        Pattern nameValidation = Pattern.compile("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
+        Matcher matcher = nameValidation.matcher(email);
+        return matcher.matches();
     }
 }
