@@ -1,6 +1,7 @@
 package db;
 
 import org.junit.jupiter.api.Test;
+import util.Helpers;
 
 import java.sql.*;
 
@@ -21,11 +22,13 @@ class InsertTest {
             statement.setString(1, email);
             ResultSet rs = statement.executeQuery();
             assertTrue(rs.next());
+            Helpers.deleteAfterTesting(email);
             statement.close();
             connection.close();
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
+            assertFalse(false);
         }
     }
 }

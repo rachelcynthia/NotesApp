@@ -1,23 +1,35 @@
 package user;
 
+import db.Insert;
+import db.JDBC;
 import exceptions.InvalidEmailException;
 import exceptions.InvalidNameException;
 import exceptions.InvalidPasswordException;
 import exceptions.PasswordDoesNotMatchException;
 import org.junit.jupiter.api.Test;
+import util.Helpers;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class RegisterUserTest {
 
     @Test
     void shouldBeAbleToCreateANewUserWithValidFields() {
+
         String name = "Test user";
-        String email = "user@gmail.com";
+        String email = "user12@gmail.com";
         String password = "Password@123";
+
         RegisterUser newUser = new RegisterUser(name, email, password, password);
 
         User user = newUser.create();
+        if (user != null) {
+            Helpers.deleteAfterTesting(email);
+        }
 
         assertNotNull(user);
     }

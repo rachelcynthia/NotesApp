@@ -1,10 +1,12 @@
 package db;
 
+import user.User;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class Insert {
-    static void addUserToAuthentication(String name, String email, String password){
+    public static User addUserToAuthentication(String name, String email, String password) {
         try {
             Connection connection = JDBC.connect();
             PreparedStatement statement = connection.prepareStatement("INSERT INTO AUTHENTICATION VALUES(?,?,?)");
@@ -14,9 +16,11 @@ public class Insert {
             statement.executeUpdate();
             statement.close();
             connection.close();
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            return new User(name, email, password);
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
+            return null;
         }
     }
 }

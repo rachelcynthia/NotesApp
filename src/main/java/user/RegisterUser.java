@@ -1,5 +1,6 @@
 package user;
 
+import db.Insert;
 import exceptions.InvalidEmailException;
 import exceptions.InvalidNameException;
 import exceptions.InvalidPasswordException;
@@ -38,8 +39,7 @@ public class RegisterUser {
         if (!password.equals(confirmPassword)) {
             throw new PasswordDoesNotMatchException();
         }
-
-        return new User(name, email, password);
+        return Insert.addUserToAuthentication(name, email, password);
     }
 
     private boolean getNameValidation() {
