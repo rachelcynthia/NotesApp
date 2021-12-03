@@ -25,10 +25,10 @@ class LoginTest {
         register.create();
 
         Login loginUser = new Login(email, password);
-        boolean isAuthenticated = loginUser.authenticate();
+        User user = loginUser.authenticate();
         Helpers.deleteAfterTesting(email);
 
-        assertTrue(isAuthenticated);
+        assertNotNull(user);
     }
 
     @Test
@@ -41,9 +41,9 @@ class LoginTest {
         register.create();
 
         Login loginUser = new Login(email, "pass");
-        boolean isAuthenticated = loginUser.authenticate();
+        User user = loginUser.authenticate();
         Helpers.deleteAfterTesting(email);
 
-        assertFalse(isAuthenticated);
+        assertNull(user);
     }
 }

@@ -1,11 +1,13 @@
 package db;
 
+import user.User;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class Select {
-    public static boolean selectFromAuthentication(String email, String password) {
+    public static User selectFromAuthentication(String email, String password) {
         try {
             Connection connection = JDBC.connect();
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM AUTHENTICATION WHERE EMAIL = ?");
@@ -13,10 +15,11 @@ public class Select {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String correctPassword = resultSet.getString("password");
+                String name = resultSet.getString("name");
                 if (correctPassword.equals(password)) {
                     statement.close();
                     connection.close();
-                    return true;
+                    return new User(name, email, password);
                 }
             }
             statement.close();
@@ -25,6 +28,6 @@ public class Select {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        return false;
+        return null;
     }
 }

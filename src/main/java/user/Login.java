@@ -18,7 +18,7 @@ public class Login {
         }
     }
 
-    boolean authenticate() {
+    User authenticate() {
         return Select.selectFromAuthentication(email, password);
     }
 
