@@ -1,7 +1,5 @@
 package user;
 
-import db.Insert;
-import db.JDBC;
 import exceptions.InvalidEmailException;
 import exceptions.InvalidNameException;
 import exceptions.InvalidPasswordException;
@@ -9,13 +7,9 @@ import exceptions.PasswordDoesNotMatchException;
 import org.junit.jupiter.api.Test;
 import util.Helpers;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-class RegisterUserTest {
+class RegisterTest {
 
     @Test
     void shouldBeAbleToCreateANewUserWithValidFields() {
@@ -24,7 +18,7 @@ class RegisterUserTest {
         String email = "user12@gmail.com";
         String password = "Password@123";
 
-        RegisterUser newUser = new RegisterUser(name, email, password, password);
+        Register newUser = new Register(name, email, password, password);
 
         User user = newUser.create();
         if (user != null) {
@@ -39,7 +33,7 @@ class RegisterUserTest {
         String name = "User123";
         String email = "user@gmail.com";
         String password = "Password@123";
-        RegisterUser newUser = new RegisterUser(name, email, password, password);
+        Register newUser = new Register(name, email, password, password);
 
         assertThrows(InvalidNameException.class, newUser::create);
     }
@@ -49,7 +43,7 @@ class RegisterUserTest {
         String name = "User";
         String email = "email@j";
         String password = "Password@123";
-        RegisterUser newUser = new RegisterUser(name, email, password, password);
+        Register newUser = new Register(name, email, password, password);
 
         assertThrows(InvalidEmailException.class, newUser::create);
     }
@@ -59,7 +53,7 @@ class RegisterUserTest {
         String name = "User";
         String email = "user@gmail.com";
         String password = "password";
-        RegisterUser newUser = new RegisterUser(name, email, password, password);
+        Register newUser = new Register(name, email, password, password);
 
         assertThrows(InvalidPasswordException.class, newUser::create);
     }
@@ -70,7 +64,7 @@ class RegisterUserTest {
         String email = "user@gmail.com";
         String password = "Password@123";
         String confirmPassword = "confirmPassword";
-        RegisterUser newUser = new RegisterUser(name, email, password, confirmPassword);
+        Register newUser = new Register(name, email, password, confirmPassword);
 
         assertThrows(PasswordDoesNotMatchException.class, newUser::create);
     }

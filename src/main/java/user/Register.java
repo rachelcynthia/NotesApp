@@ -9,14 +9,14 @@ import exceptions.PasswordDoesNotMatchException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegisterUser {
+public class Register {
 
     private final String name;
     private final String email;
     private final String password;
     private final String confirmPassword;
 
-    public RegisterUser(String name, String email, String password, String confirmPassword) {
+    public Register(String name, String email, String password, String confirmPassword) {
         this.name = name;
         this.email = email;
         this.password = password;
