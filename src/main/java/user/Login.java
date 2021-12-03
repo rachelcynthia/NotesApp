@@ -19,7 +19,12 @@ public class Login {
     }
 
     User authenticate() {
-        return Select.selectFromAuthentication(email, password);
+        User user = Select.selectFromAuthentication(email, password);
+        if(user!=null){
+            user.setAuthenticated(true);
+            return user;
+        }
+        return null;
     }
 
     private boolean getEmailValidation() {
