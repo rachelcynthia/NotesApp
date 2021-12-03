@@ -1,10 +1,15 @@
 package user;
 
+import notes.Note;
+
+import java.util.ArrayList;
+
 public class User {
     private String name;
     private String email;
     private String password;
-    private boolean isAuthenticated;
+    private boolean isAuthenticated = false;
+    private ArrayList<Note> notes = new ArrayList<Note>();
 
     public User(String name, String email, String password) {
 
@@ -20,4 +25,13 @@ public class User {
     public void setAuthenticated(boolean authenticated) {
         isAuthenticated = authenticated;
     }
+
+    public boolean addNote(Note note){
+        if(isAuthenticated){
+            notes.add(note);
+            return true;
+        }
+        return false;
+    }
+
 }
