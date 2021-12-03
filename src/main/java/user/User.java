@@ -1,15 +1,16 @@
 package user;
 
+import db.Insert;
 import notes.Note;
 
 import java.util.ArrayList;
 
 public class User {
-    private String name;
-    private String email;
-    private String password;
+    private final String name;
+    private final String email;
+    private final String password;
     private boolean isAuthenticated = false;
-    private ArrayList<Note> notes = new ArrayList<Note>();
+    private final ArrayList<Note> notes = new ArrayList<Note>();
 
     public User(String name, String email, String password) {
 
@@ -26,10 +27,13 @@ public class User {
         isAuthenticated = authenticated;
     }
 
-    public boolean addNote(Note note){
-        if(isAuthenticated){
-            notes.add(note);
-            return true;
+    public boolean addNote(String title, String name) {
+        if (isAuthenticated) {
+            Note note = Insert.addNotesToTable(title, name, email);
+            if (note != null) {
+                notes.add(note);
+                return true;
+            }
         }
         return false;
     }
